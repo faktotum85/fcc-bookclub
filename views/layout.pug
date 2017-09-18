@@ -1,0 +1,51 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
+    title= title
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+  
+  body
+    nav.navbar.navbar-expand-md.navbar-light.bg-light
+      .container
+        a.navbar-brand(href='/') Bookclub
+        button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+
+        .collapse.navbar-collapse(id='navbarNav')
+          ul.navbar-nav.mr-auto
+            if user
+              li.nav-item
+                a.nav-link(href='/add') Add book
+              li.nav-item
+                a.nav-link(href=`/user/${user._id}`) My books
+          ul.navbar-nav
+            if user
+              li.nav-item
+                a.nav-link(href='/logout') Log out
+            else 
+              li.nav-item
+                a.nav-link(href='/register') Register
+              li.nav-item
+                a.nav-link(href='/login') Log in
+    
+    .container.my-5
+      
+      block messages
+        if locals.flashes
+          - const categories = Object.keys(locals.flashes)
+          each category in categories
+            each message in flashes[category]
+              .alert.alert-dismissible.fade.show(role="alert" class=`alert-${category}`)
+                button.close(type="button" data-dismiss="alert" aria-label="Close")
+                  span(aria-hidden="true") &times;
+                . 
+                  #{message}
+      
+      block content
+
+    script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js')
