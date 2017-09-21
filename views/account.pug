@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  
+  form(method='POST')
+    .form-row
+      .col-12
+        .form-group
+          label(for='fullName') Full Name
+          input.form-control(type='text' id='fullName' name='fullName' placeholder='Firstname Lastname' value=fullName)
+      .col-12.col-md-6
+        .form-group
+          label(for='city') City
+          input.form-control(type='text' id='city' name='city' placeholder='City' value=city)
+      .col-12.col-md-6
+        .form-group
+          label(for='state') State
+          input.form-control(type='text' id='state' name='state' placeholder='State' value=state)
+  
+    button.btn.btn-primary(type='submit') Submit

@@ -20,9 +20,13 @@ html
               li.nav-item
                 a.nav-link(href='/add') Add book
               li.nav-item
-                a.nav-link(href=`/user/${user._id}`) My books
+                a.nav-link(href=`/user/${user._id}`) My Bookshelf
+              li.nav-item
+                a.nav-link(href=`/trade`) Trade
           ul.navbar-nav
             if user
+              li.nav-item
+                a.nav-link(href='/account') Account
               li.nav-item
                 a.nav-link(href='/logout') Log out
             else 

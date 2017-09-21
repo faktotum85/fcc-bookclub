@@ -21,17 +21,44 @@ exports.register = async (req, res, next) => {
     username: req.body.username
   });
   const register = promisify(User.register, User);
-  await register(user, req.body.password);
+  try {
+    await register(user, req.body.password);
+  } catch(err) {
+    req.flash('danger', err.message);
+    return res.redirect('back');
+  }
   next();
 };
 
-exports.validateRegistration = (req, res, next) => {
+exports.validateRegistration = async (req, res, next) => {
   req.checkBody('password-confirm', 'Oops! Your passwords do not match').equals(req.body.password);
 
-  const errors = req.validationErrors();
-  if (errors) {
-    req.flash('danger', errors.map(err => err.msg));
+  const errors = await req.getValidationResult();
+  if (errors.array().length) {
+    req.flash('danger', errors.array().map(err => err.msg));
     return res.render('register', {title: 'Register', body: req.body, flashes: req.flash()});
   }
   next();
+};
+
+exports.account = (req, res) => {
+  res.render('account', {
+    title: 'Update your account details',
+    fullName: req.user.fullName,
+    city: req.user.city,
+    state: req.user.state
+  });
+};
+
+exports.updateAccount = async (req, res) => {
+  const update = req.body;
+  const user = await User.findOneAndUpdate({
+    _id: req.user._id
+  },{
+    $set: update
+  },{
+    new: true
+  });
+  req.flash('success', 'Your details have been updated');
+  res.redirect('back');
 }

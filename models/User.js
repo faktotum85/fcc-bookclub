@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true
-  }
+  },
+  fullName: String,
+  city: String,
+  state: String
 });
 
 userSchema.plugin(passportLocalMongoose, {
