@@ -4,6 +4,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const bookController = require('../controllers/bookController');
+const requestController = require('../controllers/requestController');
 
 
 router.get('/', catchErrors(bookController.allBooks));
@@ -12,12 +13,12 @@ router.get('/user/:userId', catchErrors(bookController.userBooks));
 
 router.get('/trade',
   authController.isLoggedIn,
-  catchErrors(bookController.trade)
+  catchErrors(requestController.trade)
 );
 
 router.get('/request/:bookId',
   authController.isLoggedIn,
-  catchErrors(bookController.requestTrade)
+  catchErrors(requestController.requestTrade)
 );
 
 router.get('/register', userController.registerForm);
@@ -50,15 +51,18 @@ router.post('/add',
   catchErrors(bookController.addBook));
 
 router.get('/cancel/:bookId/:requestId',
-  catchErrors(bookController.cancelRequest)
+  authController.isLoggedIn,
+  catchErrors(requestController.cancelRequest)
 );
 
 router.get('/approve/:bookId/:requestId',
-  catchErrors(bookController.approveRequest)
+  authController.isLoggedIn,
+  catchErrors(requestController.approveRequest)
 );
 
 router.get('/reject/:bookId/:requestId',
-  catchErrors(bookController.rejectRequest)
+  authController.isLoggedIn,
+  catchErrors(requestController.rejectRequest)
 );
 
 module.exports = router;

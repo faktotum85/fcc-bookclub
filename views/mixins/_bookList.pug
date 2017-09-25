@@ -8,18 +8,7 @@ mixin bookList(books = [], type = request)
             h6.card-title #{book.title}
               br
               small.text-muted by #{book.authors ? book.authors.join(' ,') : ''}
-            if type === 'request'
-              if currentPath === '/' && (!user || !book.owner.equals(user._id))
-                a.badge.badge-secondary.mb-2(href=`/user/${book.owner._id}`) Added by #{book.owner.username}
-              if user && !book.owner.equals(user._id)
-                a.btn.btn-primary(href=`/request/${book._id}` role="button") Request
-            if type === 'respond'
-              a.btn.btn-success.mb-1(href=`/approve/${book._id}/${book.requests._id}` role="button") Approve
-              a.btn.btn-danger(href=`/reject/${book._id}/${book.requests._id}` role="button") Reject
-            if type === 'cancel'
-              a.btn.btn-danger(href=`/cancel/${book._id}/${book.requests._id}` role="button") Cancel
-            if type === 'finalized'
-              if book.requests.approved
-                span.badge.badge-success Approved by #{book.owner._id.equals(user._id) ? 'you' : book.owner.username} 
-              if book.requests.rejected
-                span.badge.badge-danger Rejected by #{book.owner._id.equals(user._id) ? 'you' : book.owner.username} 
+            if currentPath === '/' && (!user || !book.owner.equals(user._id))
+              a.badge.badge-secondary.mb-2(href=`/user/${book.owner._id}`) Added by #{book.owner.username}
+            if user && !book.owner.equals(user._id)
+              a.btn.btn-primary(href=`/request/${book._id}` role="button") Request

@@ -14,23 +14,13 @@ const bookSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
-  },
-  requests: [
-    {
-      requestor: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User'
-      },
-      approved: {
-        type: Boolean,
-        default: false
-      },
-      rejected: {
-        type: Boolean,
-        default: false
-      }
-    }
-  ]
+  }
+});
+
+bookSchema.virtual('tradeRequests', {
+  ref: 'TradeRequest',
+  localField: '_id',
+  foreignField: 'book'
 });
 
 module.exports = mongoose.model('Book', bookSchema);

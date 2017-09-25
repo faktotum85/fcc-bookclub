@@ -40,6 +40,7 @@ mongoose.connection.on('error', (err) => {
 // importing all models
 require('./models/User');
 require('./models/Book');
+require('./models/TradeRequest');
 
 require('./config/passport'); // configure passport
 

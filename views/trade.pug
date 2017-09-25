@@ -2,25 +2,25 @@
 
 extends layout
 
-include mixins/_bookList
+include mixins/_requestList
 
 block content
   h1= title
 
   h2.mt-3 Your trade requests
-  if requestsByYou.length
-    +bookList(requestsByYou, 'cancel')
+  if requestsByUser.length
+    +requestList(requestsByUser, 'cancel')
   else 
     p You have no trade requests pending
     
   h2.mt-3 Requests from other users
-  if requestsToYou.length
-    +bookList(requestsToYou, 'respond')
+  if requestsToUser.length
+    +requestList(requestsToUser, 'respond')
   else
     p You have no requests to approve
   
   h2.mt-3 Finalized trades
   if finalized.length
-    +bookList(finalized, 'finalized')
+    +requestList(finalized, 'finalized')
   else 
     p You have no finalized trades

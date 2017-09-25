@@ -1,0 +1,20 @@
+mixin requestList(requests = [], type) 
+  .row
+    each request in requests
+      .col-6.col-sm-4.col-md-3.col-xl-2
+        .card.mb-2
+          img.card-img-top(src=request.book.thumbnail alt=request.book.title)
+          .card-body
+            h6.card-title #{request.book.title}
+              br
+              small.text-muted by #{request.book.authors ? request.book.authors.join(' ,') : ''}
+            if type === 'respond'
+              a.btn.btn-success.mb-1(href=`/approve/${request.book._id}/${request._id}` role="button") Approve
+              a.btn.btn-danger(href=`/reject/${request.book._id}/${request._id}` role="button") Reject
+            if type === 'cancel'
+              a.btn.btn-danger(href=`/cancel/${request.book._id}/${request._id}` role="button") Cancel
+            if type === 'finalized'
+              if request.approved
+                span.badge.badge-success Approved by #{request.requestTo._id.equals(user._id) ? 'you' : request.requestTo.username} 
+              if request.rejected
+                span.badge.badge-danger Rejected by #{request.requestTo._id.equals(user._id) ? 'you' : request.requestTo.username} 
